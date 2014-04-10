@@ -1,0 +1,7 @@
+base   fkstimer
+author Michal Červňák
+email  miso@fykos.cz
+date   2014-03-18
+name   fkstimer
+desc   display time to deadline
+url    FIXME
