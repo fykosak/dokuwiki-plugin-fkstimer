@@ -12,38 +12,38 @@ function casodpo(timeElement, deadlineDate) {
         var textToDeadline="";
 
         if (toDeadlineDays<5) {
-            textDays="dnů";
+            textDays=dayPlN;
             if (toDeadlineDays===1) {
-                textDays="den";
+                textDays=daySgN;
             };
         }
         else {
-            textDays="dní" ;
+            textDays=dayPlG ;
         };
         deltatime+=-(toDeadlineDays*1000*60*60*24);
 
         var toDeadlineHours=Math.floor(deltatime/(1000*60*60));
 
         if (toDeadlineHours<5) {
-            textHours="hodiny";
+            textHours=hourPlN;
             if (toDeadlineHours===1) {
-                textHours="hodina";
+                textHours=hourSgN;
             };
         }
         else {
-            textHours="hodin";
+            textHours=hourPlG;
         };
         deltatime+=-(toDeadlineHours*1000*60*60);
 
         var toDeadlineMinute=Math.floor(deltatime/(1000*60));
         if (toDeadlineMinute<5) {
-            textMinute="minuty";
+            textMinute=minPlN;
             if (toDeadlineMinute===1) {
-                textMinute="minuta"; 
+                textMinute=minSgN; 
             };
         }
         else {
-            textMinute="minut";
+            textMinute=minPlG;
         };
         deltatime+=-(toDeadlineMinute*1000*60);
 
