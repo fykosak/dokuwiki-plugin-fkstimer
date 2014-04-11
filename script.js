@@ -49,13 +49,14 @@ function casodpo(timeElement, deadlineDate) {
 
         var toDeadlineSeconds=Math.floor(deltatime/(1000));
         if (toDeadlineSeconds<5) {
-            textSeconds="sekundy";
+            textSeconds=secPlN;
             if (toDeadlineSeconds===1) {
-                textSeconds="sekunda";
+                textSeconds=secSgN;
             };
         }
-        else {textSeconds="sekund";
+        else {textSeconds=secPlG;
         };
+        // display time 
         if(!toDeadlineDays&&toDeadlineSeconds%2&&!toDeadlineHours&&toDeadlineMinute<31){
             colorText="#ff7e00";
         }
