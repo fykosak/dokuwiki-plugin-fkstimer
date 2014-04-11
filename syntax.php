@@ -57,7 +57,7 @@ class syntax_plugin_fkstimer extends DokuWiki_Syntax_Plugin {
 
             list($postdadline) = $match;
             //$renderer->doc .= "<script type='text/javascript' charset='utf-8' src='lib/plugins/fkstimer/scripts.js'></script>";
-            $script .= '<script type="text/javascript" charset="utf-8" src="lib/plugins/fksnewsfeed/script.js">';
+            $script .= '<script type="text/javascript" charset="utf-8">';
             $script .= 'var secSgN ="' . $this->getLang('secSgN') . '";';
             $script .= 'var secPlN ="' . $this->getLang('secPlN') . '";';
             $script .= 'var secPlG ="' . $this->getLang('secPlG') . '";';
