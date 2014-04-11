@@ -1,11 +1,11 @@
 <?php
 
-
 if (!defined('DOKU_INC')) {
     die();
 }
 
 class syntax_plugin_fkstimer extends DokuWiki_Syntax_Plugin {
+
     public function getType() {
         return 'substition';
     }
@@ -25,7 +25,6 @@ class syntax_plugin_fkstimer extends DokuWiki_Syntax_Plugin {
     public function connectTo($mode) {
         $this->Lexer->addSpecialPattern('<fkstimer>.+?</fkstimer>', $mode, 'plugin_fkstimer');
     }
-
 
     //public function postConnect() { $this->Lexer->addExitPattern('</fkstimer>','plugin_fkstimer'); }
 
@@ -58,10 +57,32 @@ class syntax_plugin_fkstimer extends DokuWiki_Syntax_Plugin {
 
             list($postdadline) = $match;
             //$renderer->doc .= "<script type='text/javascript' charset='utf-8' src='lib/plugins/fkstimer/scripts.js'></script>";
+            $script .= '<script type="text/javascript" charset="utf-8" src="lib/plugins/fksnewsfeed/script.js">';
+            $script .= 'var secSgN ="' . $this->getLang('secSgN') . '";';
+            $script .= 'var secPlN ="' . $this->getLang('secPlN') . '";';
+            $script .= 'var secPlG ="' . $this->getLang('secPlG') . '";';
+
+            $script .= 'var minSgN ="' . $this->getLang('minSgN') . '";';
+            $script .= 'var minPlN ="' . $this->getLang('minPlN') . '";';
+            $script .= 'var minPlG ="' . $this->getLang('minPlG') . '";';
+
+            $script .= 'var hourSgN ="' . $this->getLang('hourSgN') . '";';
+            $script .= 'var hourPlN ="' . $this->getLang('hourPlN') . '";';
+            $script .= 'var hourPlG ="' . $this->getLang('hourPlG') . '";';
+
+            $script .= 'var daySgN ="' . $this->getLang('daySgN') . '";';
+            $script .= 'var dayPlN ="' . $this->getLang('dayPlN') . '";';
+            $script .= 'var dayPlG ="' . $this->getLang('dayPlG') . '";';
+
+            $script .= 'var pastevent="' . $this->getLang('pastevent') . '";';
+
+            $script .='</script>';
+            $renderer->doc .= $script;
             $renderer->doc .= "<span class='deadline'>";
             $renderer->doc .= $postdadline;
             $renderer->doc .= "</span>";
         }
         return false;
     }
+
 }
