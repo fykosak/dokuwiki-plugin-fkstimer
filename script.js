@@ -78,7 +78,7 @@ function casodpo(timeElement, deadlineDate) {
         };
     }
     else{
-        textToDeadline+="termin už ubehol";
+        textToDeadline+=pastevent;
     };
     timeElement.innerHTML=textToDeadline;
     //};
