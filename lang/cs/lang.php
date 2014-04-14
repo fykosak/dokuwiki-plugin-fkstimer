@@ -28,8 +28,8 @@ $lang['hourPlN']           = 'hodiny';
 $lang['hourPlG']           = 'hodin';
 
 $lang['daySgN']           = 'den';
-$lang['dayPlN']           = 'dnů';
-$lang['dayPlG']           = 'dní';
+$lang['dayPlN']           = 'dny';
+$lang['dayPlG']           = 'dnů';
 
 $lang['pastevent']        = 'termin už ubehol';
 
