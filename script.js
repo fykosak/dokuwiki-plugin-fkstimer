@@ -1,8 +1,9 @@
 //DeadlineDataSingle[date-time,series,types,integer-time]
 function casodpo(timeElement, deadlineDate) {
-    var CurrentDate = new Date();
+    //var CurrentDate = new Date();
+    var CurrentDate = new Date(currentDate);
     var time = CurrentDate.getTime();
-    time += 2 * 1000 * 60 * 60;
+    //time += 2 * 1000 * 60 * 60;
 
     var Dtime=deadlineDate.getTime();
     var deltatime=Dtime-time;

@@ -54,10 +54,16 @@ class syntax_plugin_fkstimer extends DokuWiki_Syntax_Plugin {
         if ($mode == 'xhtml') {
             /** @var Do ku_Renderer_xhtml $renderer */
             list($state, $match) = $data;
-
+            $infoD = getdate();
+            if ($infoD['mon']<11){
+                $infoD['mon']="0".$infoD['mon'];
+            }
+            if ($infoD['mday']<11){
+                $infoD['mday']="0".$infoD['mday'];
+            }
+            $dateD= $infoD['year'].'-'.$infoD['mon'].'-'.$infoD['mday']."T".$infoD['hours'].':'.$infoD['minutes'].':'.$infoD['seconds'];
             list($postdadline) = $match;
-            //$renderer->doc .= "<script type='text/javascript' charset='utf-8' src='lib/plugins/fkstimer/scripts.js'></script>";
-            $script .= '<script type="text/javascript" charset="utf-8">';
+           $script .= '<script type="text/javascript" charset="utf-8">';
             $script .= 'var secSgN ="' . $this->getLang('secSgN') . '";';
             $script .= 'var secPlN ="' . $this->getLang('secPlN') . '";';
             $script .= 'var secPlG ="' . $this->getLang('secPlG') . '";';
@@ -75,6 +81,8 @@ class syntax_plugin_fkstimer extends DokuWiki_Syntax_Plugin {
             $script .= 'var dayPlG ="' . $this->getLang('dayPlG') . '";';
 
             $script .= 'var pastevent="' . $this->getLang('pastevent') . '";';
+
+            $script .= "var currentDate ='".$dateD."';";
 
             $script .='</script>';
             $renderer->doc .= $script;
