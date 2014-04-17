@@ -1,9 +1,8 @@
 //DeadlineDataSingle[date-time,series,types,integer-time]
-function casodpo(timeElement, CurrentDate , deadlineDate) {
+function casodpo(timeElement, Ctime, deadlineDate) {
     var textToDeadline = "";
 
-    var Ctime = CurrentDate.getTime();
-    //time += 2 * 1000 * 60 * 60;
+    Ctime -= 1000 ;
 
     var Dtime = deadlineDate.getTime();
     var deltatime = Dtime - Ctime;
@@ -92,12 +91,16 @@ function casodpo(timeElement, CurrentDate , deadlineDate) {
     else {
         textToDeadline += pastevent;
     }
-    
+
     timeElement.innerHTML = textToDeadline;
 
     setTimeout(function() {
-        casodpo(timeElement,CurrentDate, deadlineDate);
+        casodpo(timeElement,Ctime, deadlineDate);
     }, 1000);
 }
 var $ = jQuery;
-$(function() {$('span.deadline').each(function() {casodpo(this, new Date(currentDate),new Date($(this).text()));});});
+$(function() {
+    $('span.deadline').each(function() {
+        casodpo(this, (new Date(currentDate)).getTime(), new Date($(this).text()));
+    });
+});

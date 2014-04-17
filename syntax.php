@@ -61,6 +61,15 @@ class syntax_plugin_fkstimer extends DokuWiki_Syntax_Plugin {
             if ($infoD['mday']<11){
                 $infoD['mday']="0".$infoD['mday'];
             }
+             if ($infoD['hours']<11){
+                $infoD['hours']="0".$infoD['hours'];
+            }
+             if ($infoD['minutes']<11){
+                $infoD['minutes']="0".$infoD['minutes'];
+            }
+             if ($infoD['seconds']<11){
+                $infoD['seconds']="0".$infoD['seconds'];
+            }
             $dateD= $infoD['year'].'-'.$infoD['mon'].'-'.$infoD['mday']."T".$infoD['hours'].':'.$infoD['minutes'].':'.$infoD['seconds'];
             list($postdadline) = $match;
            $script .= '<script type="text/javascript" charset="utf-8">';
