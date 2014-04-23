@@ -2,7 +2,7 @@
 function casodpo(timeElement, Ctime, deadlineDate) {
     var textToDeadline = "";
 
-    Ctime -= 1000 ;
+    Ctime += 1000 ;
 
     var Dtime = deadlineDate.getTime();
     var deltatime = Dtime - Ctime;
