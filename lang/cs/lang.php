@@ -31,7 +31,7 @@ $lang['daySgN']           = 'den';
 $lang['dayPlN']           = 'dny';
 $lang['dayPlG']           = 'dnů';
 
-$lang['pastevent']        = 'termin už ubehol';
+$lang['pastevent']        = 'Termín je již za námi!';
 
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :
