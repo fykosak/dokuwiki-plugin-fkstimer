@@ -55,19 +55,19 @@ class syntax_plugin_fkstimer extends DokuWiki_Syntax_Plugin {
             /** @var Do ku_Renderer_xhtml $renderer */
             list($state, $match) = $data;
             $infoD = getdate();
-            if ($infoD['mon']<11){
+            if ($infoD['mon']<10){
                 $infoD['mon']="0".$infoD['mon'];
             }
-            if ($infoD['mday']<11){
+            if ($infoD['mday']<10){
                 $infoD['mday']="0".$infoD['mday'];
             }
-             if ($infoD['hours']<11){
+             if ($infoD['hours']<10){
                 $infoD['hours']="0".$infoD['hours'];
             }
-             if ($infoD['minutes']<11){
+             if ($infoD['minutes']<10){
                 $infoD['minutes']="0".$infoD['minutes'];
             }
-             if ($infoD['seconds']<11){
+             if ($infoD['seconds']<10){
                 $infoD['seconds']="0".$infoD['seconds'];
             }
             $dateD= $infoD['year'].'-'.$infoD['mon'].'-'.$infoD['mday']."T".$infoD['hours'].':'.$infoD['minutes'].':'.$infoD['seconds'];
