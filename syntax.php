@@ -26,8 +26,6 @@ class syntax_plugin_fkstimer extends DokuWiki_Syntax_Plugin {
         $this->Lexer->addSpecialPattern('<fkstimer>.+?</fkstimer>', $mode, 'plugin_fkstimer');
     }
 
-    //public function postConnect() { $this->Lexer->addExitPattern('</fkstimer>','plugin_fkstimer'); }
-
     /**
      * Handle the match
      */
@@ -55,24 +53,24 @@ class syntax_plugin_fkstimer extends DokuWiki_Syntax_Plugin {
             /** @var Do ku_Renderer_xhtml $renderer */
             list($state, $match) = $data;
             $infoD = getdate();
-            if ($infoD['mon']<10){
-                $infoD['mon']="0".$infoD['mon'];
+            if ($infoD['mon'] < 10) {
+                $infoD['mon'] = "0" . $infoD['mon'];
             }
-            if ($infoD['mday']<10){
-                $infoD['mday']="0".$infoD['mday'];
+            if ($infoD['mday'] < 10) {
+                $infoD['mday'] = "0" . $infoD['mday'];
             }
-             if ($infoD['hours']<10){
-                $infoD['hours']="0".$infoD['hours'];
+            if ($infoD['hours'] < 10) {
+                $infoD['hours'] = "0" . $infoD['hours'];
             }
-             if ($infoD['minutes']<10){
-                $infoD['minutes']="0".$infoD['minutes'];
+            if ($infoD['minutes'] < 10) {
+                $infoD['minutes'] = "0" . $infoD['minutes'];
             }
-             if ($infoD['seconds']<10){
-                $infoD['seconds']="0".$infoD['seconds'];
+            if ($infoD['seconds'] < 10) {
+                $infoD['seconds'] = "0" . $infoD['seconds'];
             }
-            $dateD= $infoD['year'].'-'.$infoD['mon'].'-'.$infoD['mday']."T".$infoD['hours'].':'.$infoD['minutes'].':'.$infoD['seconds'];
+            $dateD = $infoD['year'] . '-' . $infoD['mon'] . '-' . $infoD['mday'] . "T" . $infoD['hours'] . ':' . $infoD['minutes'] . ':' . $infoD['seconds'];
             list($postdadline) = $match;
-           $script .= '<script type="text/javascript" charset="utf-8">';
+            $script .= '<script type="text/javascript" charset="utf-8">';
             $script .= 'var secSgN ="' . $this->getLang('secSgN') . '";';
             $script .= 'var secPlN ="' . $this->getLang('secPlN') . '";';
             $script .= 'var secPlG ="' . $this->getLang('secPlG') . '";';
@@ -91,7 +89,7 @@ class syntax_plugin_fkstimer extends DokuWiki_Syntax_Plugin {
 
             $script .= 'var pastevent="' . $this->getLang('pastevent') . '";';
 
-            $script .= "var currentDate ='".$dateD."';";
+            $script .= "var currentDate ='" . $dateD . "';";
 
             $script .='</script>';
             $renderer->doc .= $script;
