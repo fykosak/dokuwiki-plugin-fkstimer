@@ -25,22 +25,22 @@ function casodpo(timeElement, Ctime, deadlineDate) {
 
         // display time 
         if (!toDeadlineDays && toDeadlineSeconds % 2 && !toDeadlineHours && toDeadlineMinute < 31) {
-            colorText = "#ff7e00";
+            colorText = "__extern__";
         }
         else
-            colorText = "black";
+            colorText = "__text__";
 
         if (toDeadlineDays) {
-            textToDeadline = textToDeadline + "<span style='font-size:20px; color:" + colorText + ";font-weight:bold;'> " + toDeadlineDays + "</span><span style='font-size:10px;'> " + textDays + "</span>";
+            textToDeadline = textToDeadline + "<span style='font-size:130%; color:" + colorText + ";font-weight:bold;'> " + toDeadlineDays + "</span><span style='font-size:100%;'> " + textDays + "</span>";
         }
         ;
         if (toDeadlineDays || toDeadlineHours) {
-            textToDeadline = textToDeadline + "<span style='font-size:20px; color:" + colorText + ";font-weight:bold;'> " + toDeadlineHours + "</span><span style='font-size:10px;'> " + textHours + "</span>";
+            textToDeadline = textToDeadline + "<span style='font-size:130%; color:" + colorText + ";font-weight:bold;'> " + toDeadlineHours + "</span><span style='font-size:100%;'> " + textHours + "</span>";
         }
         ;
-        textToDeadline += "</span><span style='font-size:20px; color:" + colorText + ";font-weight:bold;'> " + toDeadlineMinute + "</span><span style='font-size:10px;'> " + textMinute + "</span>";
+        textToDeadline += "</span><span style='font-size:130%; color:" + colorText + ";font-weight:bold;'> " + toDeadlineMinute + "</span><span style='font-size:100%;'> " + textMinute + "</span>";
         if (!toDeadlineDays) {
-            textToDeadline += "<span style='font-size:20px; color:" + colorText + ";font-weight:bold;'> " + toDeadlineSeconds + "</span><span style='font-size:10px;'> " + textSeconds + "</span>";
+            textToDeadline += "<span style='font-size:130%; color:" + colorText + ";font-weight:bold;'> " + toDeadlineSeconds + "</span><span style='font-size:100%;'> " + textSeconds + "</span>";
         }
         ;
     }
