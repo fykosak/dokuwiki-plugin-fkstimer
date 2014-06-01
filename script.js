@@ -31,11 +31,11 @@ function casodpo(timeElement, Ctime, deadlineDate) {
             colorText = "__text__";
 
         if (toDeadlineDays) {
-            textToDeadline = textToDeadline + "<span style='font-size:130%; color:" + colorText + ";font-weight:bold;'> " + toDeadlineDays + "</span><span style='font-size:100%;'> " + textDays + "</span>";
+            textToDeadline = textToDeadline + "<span style='font-size:100%; color:" + colorText + ";font-weight:bold;'> " + toDeadlineDays + "</span><span style='font-size:100%;'> " + textDays + "</span>";
         }
         ;
         if (toDeadlineDays || toDeadlineHours) {
-            textToDeadline = textToDeadline + "<span style='font-size:130%; color:" + colorText + ";font-weight:bold;'> " + toDeadlineHours + "</span><span style='font-size:100%;'> " + textHours + "</span>";
+            textToDeadline = textToDeadline + "<span style='font-size:100%; color:" + colorText + ";font-weight:bold;'> " + toDeadlineHours + "</span><span style='font-size:100%;'> " + textHours + "</span>";
         }
         ;
         textToDeadline += "</span><span style='font-size:130%; color:" + colorText + ";font-weight:bold;'> " + toDeadlineMinute + "</span><span style='font-size:100%;'> " + textMinute + "</span>";
