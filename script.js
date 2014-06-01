@@ -27,9 +27,9 @@ function casodpo(timeElement, Ctime, deadlineDate) {
         if (!toDeadlineDays && toDeadlineSeconds % 2 && !toDeadlineHours && toDeadlineMinute < 31) {
             colorText = "__extern__";
         }
-        else
+        else {
             colorText = "__text__";
-
+        }
         if (toDeadlineDays) {
             textToDeadline = textToDeadline + "<span style='font-size:100%; color:" + colorText + ";font-weight:bold;'> " + toDeadlineDays + "</span><span style='font-size:100%;'> " + textDays + "</span>";
         }
