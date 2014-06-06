@@ -26,28 +26,14 @@ class syntax_plugin_fkstimer extends DokuWiki_Syntax_Plugin {
         $this->Lexer->addSpecialPattern('<fkstimer>.+?</fkstimer>', $mode, 'plugin_fkstimer');
     }
 
-    //public function postConnect() { $this->Lexer->addExitPattern('</fkstimer>','plugin_fkstimer'); }
-
     /**
      * Handle the match
      */
     public function handle($match, $state, $pos, Doku_Handler &$handler) {
         $match = substr($match, 10, 19);
         $postdadline = $match;
-        //if ($color = $this->_isValid($color)) $color = "color:$color;";
-        //if ($background = $this->_isValid($background)) $background = "background-color:$background;";
         return array($state, array($postdadline));
     }
-
-    /* function loaddeadline($file){
-      if (file_exists($file)){
-      $opfile = fopen($file,"r");
-      $DeadlineData = fread($opfile,10000);
-      fclose($opfile);
-      str_replace("\n",'',$DeadlineData);
-      }
-      return $DeadlineData;
-      } */
 
     public function render($mode, Doku_Renderer &$renderer, $data) {
         // $data is what the function handle return'ed.
@@ -55,24 +41,24 @@ class syntax_plugin_fkstimer extends DokuWiki_Syntax_Plugin {
             /** @var Do ku_Renderer_xhtml $renderer */
             list($state, $match) = $data;
             $infoD = getdate();
-            if ($infoD['mon']<10){
-                $infoD['mon']="0".$infoD['mon'];
+            if ($infoD['mon'] < 10) {
+                $infoD['mon'] = "0" . $infoD['mon'];
             }
-            if ($infoD['mday']<10){
-                $infoD['mday']="0".$infoD['mday'];
+            if ($infoD['mday'] < 10) {
+                $infoD['mday'] = "0" . $infoD['mday'];
             }
-             if ($infoD['hours']<10){
-                $infoD['hours']="0".$infoD['hours'];
+            if ($infoD['hours'] < 10) {
+                $infoD['hours'] = "0" . $infoD['hours'];
             }
-             if ($infoD['minutes']<10){
-                $infoD['minutes']="0".$infoD['minutes'];
+            if ($infoD['minutes'] < 10) {
+                $infoD['minutes'] = "0" . $infoD['minutes'];
             }
-             if ($infoD['seconds']<10){
-                $infoD['seconds']="0".$infoD['seconds'];
+            if ($infoD['seconds'] < 10) {
+                $infoD['seconds'] = "0" . $infoD['seconds'];
             }
-            $dateD= $infoD['year'].'-'.$infoD['mon'].'-'.$infoD['mday']."T".$infoD['hours'].':'.$infoD['minutes'].':'.$infoD['seconds'];
+            $dateD = $infoD['year'] . '-' . $infoD['mon'] . '-' . $infoD['mday'] . "T" . $infoD['hours'] . ':' . $infoD['minutes'] . ':' . $infoD['seconds'];
             list($postdadline) = $match;
-           $script .= '<script type="text/javascript" charset="utf-8">';
+            $script .= '<script type="text/javascript" charset="utf-8">';
             $script .= 'var secSgN ="' . $this->getLang('secSgN') . '";';
             $script .= 'var secPlN ="' . $this->getLang('secPlN') . '";';
             $script .= 'var secPlG ="' . $this->getLang('secPlG') . '";';
@@ -91,7 +77,7 @@ class syntax_plugin_fkstimer extends DokuWiki_Syntax_Plugin {
 
             $script .= 'var pastevent="' . $this->getLang('pastevent') . '";';
 
-            $script .= "var currentDate ='".$dateD."';";
+            $script .= "var currentDate ='" . $dateD . "';";
 
             $script .='</script>';
             $renderer->doc .= $script;
@@ -101,5 +87,4 @@ class syntax_plugin_fkstimer extends DokuWiki_Syntax_Plugin {
         }
         return false;
     }
-
 }
