@@ -38,9 +38,9 @@ function casodpo(timeElement, Ctime, deadlineDate) {
             textToDeadline = textToDeadline + "<span style='font-size:100%; color:" + colorText + ";font-weight:bold;'> " + toDeadlineHours + "</span><span style='font-size:100%;'> " + textHours + "</span>";
         }
         ;
-        textToDeadline += "</span><span style='font-size:130%; color:" + colorText + ";font-weight:bold;'> " + toDeadlineMinute + "</span><span style='font-size:100%;'> " + textMinute + "</span>";
+        textToDeadline += "</span><span style='font-size:100%; color:" + colorText + ";font-weight:bold;'> " + toDeadlineMinute + "</span><span style='font-size:100%;'> " + textMinute + "</span>";
         if (!toDeadlineDays) {
-            textToDeadline += "<span style='font-size:130%; color:" + colorText + ";font-weight:bold;'> " + toDeadlineSeconds + "</span><span style='font-size:100%;'> " + textSeconds + "</span>";
+            textToDeadline += "<span style='font-size:100%; color:" + colorText + ";font-weight:bold;'> " + toDeadlineSeconds + "</span><span style='font-size:100%;'> " + textSeconds + "</span>";
         }
         ;
     }
