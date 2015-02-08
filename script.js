@@ -1,89 +1,73 @@
 //DeadlineDataSingle[date-time,series,types,integer-time]
-function casodpo(timeElement, Ctime, deadlineDate) {
-    var textToDeadline = "";
+var $ = jQuery;
+$(function() {
+    var $ = jQuery;
+    $('span.FKS_timer_deadline').each(function() {
+        casodpo(this);
+    });
+    function casodpo($span) {
+        var current = (new Date()).getTime();
+        var deadline = (new Date($($span).data('date'))).getTime();
+        var delta = deadline - current;
+        var text = _get_time(delta);
 
-    Ctime += 1000;
-
-    var Dtime = deadlineDate.getTime();
-    var deltatime = Dtime - Ctime;
-    if (deltatime > 0) {
-
-        var toDeadlineDays = Math.floor(deltatime / (1000 * 60 * 60 * 24));
-        var textDays = switchlang(toDeadlineDays, daySgN, dayPlN, dayPlG);
-        deltatime += -(toDeadlineDays * 1000 * 60 * 60 * 24);
-
-        var toDeadlineHours = Math.floor(deltatime / (1000 * 60 * 60));
-        var textHours = switchlang(toDeadlineHours, hourSgN, hourPlN, hourPlG);
-        deltatime += -(toDeadlineHours * 1000 * 60 * 60);
-
-        var toDeadlineMinute = Math.floor(deltatime / (1000 * 60));
-        var textMinute = switchlang(toDeadlineMinute, minSgN, minPlN, minPlG);
-        deltatime += -(toDeadlineMinute * 1000 * 60);
-
-        var toDeadlineSeconds = Math.floor(deltatime / (1000));
-        var textSeconds = switchlang(toDeadlineSeconds, secSgN, secPlN, secPlG);
-
-        // display time 
-        if (!toDeadlineDays && toDeadlineSeconds % 2 && !toDeadlineHours && toDeadlineMinute < 31) {
-            colorText = "__extern__";
-        }
-        else {
-            colorText = "__text__";
-        }
-        if (toDeadlineDays) {
-            textToDeadline = textToDeadline + "<span style='font-size:100%; color:" + colorText + ";font-weight:bold;'> " + toDeadlineDays + "</span><span style='font-size:100%;'> " + textDays + "</span>";
-        }
-        ;
-        if (toDeadlineDays || toDeadlineHours) {
-            textToDeadline = textToDeadline + "<span style='font-size:100%; color:" + colorText + ";font-weight:bold;'> " + toDeadlineHours + "</span><span style='font-size:100%;'> " + textHours + "</span>";
-        }
-        ;
-        textToDeadline += "</span><span style='font-size:100%; color:" + colorText + ";font-weight:bold;'> " + toDeadlineMinute + "</span><span style='font-size:100%;'> " + textMinute + "</span>";
-        if (!toDeadlineDays) {
-            textToDeadline += "<span style='font-size:100%; color:" + colorText + ";font-weight:bold;'> " + toDeadlineSeconds + "</span><span style='font-size:100%;'> " + textSeconds + "</span>";
-        }
-        ;
+        $span.innerHTML = text;
+        setTimeout(function() {
+            casodpo($span);
+        }, 1000);
     }
-    else {
-        textToDeadline += pastevent;
-    }
-
-    timeElement.innerHTML = textToDeadline;
-
-    setTimeout(function() {
-        casodpo(timeElement, Ctime, deadlineDate);
-    }, 1000);
-}
-
-function switchlang(number, SgN, PlN, PlG) {
-    switch (number) {
-        case 0:
-            text = PlG;
-            break;
-        case 1:
-            text = SgN;
-            break;
-        case 2:
-            text = PlN;
-            break;
-        case 3:
-            text = PlN;
-            break;
-        case 4:
-            text = PlN;
-            break;
-        default:
-            text = PlG;
-
+    function switchlang(number, SgN, PlN, PlG) {
+        switch (number) {
+            case 0:
+                return  PlG;
+                break;
+            case 1:
+                return SgN;
+                break;
+            case 2:
+                return  PlN;
+                break;
+            case 3:
+                return PlN;
+                break;
+            case 4:
+                return PlN;
+                break;
+            default:
+                return PlG;
+        }
+        ;
 
     }
     ;
-    return text;
-}
-;
-var $ = jQuery;
-$(function() {
-    $('span.deadline').each(function() {
-        casodpo(this, (new Date(currentDate)).getTime(), new Date($(this).text()));
-    });
+    function _get_time(delta) {
+
+
+        if (delta > 0) {
+            delta -= (60 * 60 * 1000);
+            var time = (new Date(delta));
+            var sec = time.getSeconds();
+            var min = time.getMinutes();
+            var hours = time.getHours();
+            var days = time.getDate() + (time.getMonth() * 31) - 1;
+            var $return = "";
+            if (days) {
+                $return += '<span class="FKS_timer_time">' + days + '</span><span class="FKS_timer_text">' + switchlang(days, daySgN, dayPlN, dayPlG) + "</span>";
+            }
+            ;
+            if (days || hours) {
+                $return += '<span class="FKS_timer_time">' + hours + '</span><span class="FKS_timer_text">' + switchlang(hours, hourSgN, hourPlN, hourPlG) + "</span>";
+            }
+            ;
+            $return += '<span class="FKS_timer_time">' + min + '</span><span class="FKS_timer_text">' + switchlang(min, minSgN, minPlN, minPlG) + "</span>";
+            if (!days) {
+                $return += '<span class="FKS_timer_time">' + sec + '</span><span class="FKS_timer_text">' + switchlang(sec, secSgN, secPlN, secPlG) + "</span>";
+            }
+            ;
+            return $return;
+        }
+        else {
+            return pastevent;
+        }
+    }
 });

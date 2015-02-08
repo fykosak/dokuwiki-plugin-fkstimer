@@ -6,6 +6,11 @@ if (!defined('DOKU_INC')) {
 
 class syntax_plugin_fkstimer extends DokuWiki_Syntax_Plugin {
 
+    private $gram_lang = array('secSgN', 'secPlN', 'secPlG',
+        'minSgN', 'minPlN', 'minPlG',
+        'hourSgN', 'hourPlN', 'hourPlG',
+        'daySgN', 'dayPlN', 'dayPlG');
+
     public function getType() {
         return 'substition';
     }
@@ -23,16 +28,35 @@ class syntax_plugin_fkstimer extends DokuWiki_Syntax_Plugin {
     }
 
     public function connectTo($mode) {
-        $this->Lexer->addSpecialPattern('<fkstimer>.+?</fkstimer>', $mode, 'plugin_fkstimer');
+        $this->Lexer->addSpecialPattern('{{fkstimer>.+?}}', $mode, 'plugin_fkstimer');
     }
 
     /**
      * Handle the match
      */
     public function handle($match, $state, $pos, Doku_Handler &$handler) {
-        $match = substr($match, 10, 19);
-        $postdadline = $match;
-        return array($state, array($postdadline));
+        $match = substr($match, 11, -2);
+
+        $params = helper_plugin_fkshelper::extractParamtext($match);
+        if (array_key_exists('date', $params)) {
+            
+        } elseif (array_key_exists('series', $params)) {
+            /**
+             * @TODO 
+             */
+        } else {
+            foreach (array('hours', 'minute', 'second')as $value) {
+                if (!array_key_exists($value, $params)) {
+                    $params[$value] = 0;
+                }
+            }
+
+            $params['date'] = date("Y-m-d\TH:i:s", mktime($params['hours'], $params['minute'], $params['second'], $params['month'], $params['day'], $params['year']));
+        }
+
+
+
+        return array($state, array($params));
     }
 
     public function render($mode, Doku_Renderer &$renderer, $data) {
@@ -40,51 +64,27 @@ class syntax_plugin_fkstimer extends DokuWiki_Syntax_Plugin {
         if ($mode == 'xhtml') {
             /** @var Do ku_Renderer_xhtml $renderer */
             list($state, $match) = $data;
-            $infoD = getdate();
-            if ($infoD['mon'] < 10) {
-                $infoD['mon'] = "0" . $infoD['mon'];
-            }
-            if ($infoD['mday'] < 10) {
-                $infoD['mday'] = "0" . $infoD['mday'];
-            }
-            if ($infoD['hours'] < 10) {
-                $infoD['hours'] = "0" . $infoD['hours'];
-            }
-            if ($infoD['minutes'] < 10) {
-                $infoD['minutes'] = "0" . $infoD['minutes'];
-            }
-            if ($infoD['seconds'] < 10) {
-                $infoD['seconds'] = "0" . $infoD['seconds'];
-            }
-            $dateD = $infoD['year'] . '-' . $infoD['mon'] . '-' . $infoD['mday'] . "T" . $infoD['hours'] . ':' . $infoD['minutes'] . ':' . $infoD['seconds'];
-            list($postdadline) = $match;
+
+
+            //$curent = date("Y-m-d-H:i:s");
+            list($params) = $match;
+
+
             $script .= '<script type="text/javascript" charset="utf-8">';
-            $script .= 'var secSgN ="' . $this->getLang('secSgN') . '";';
-            $script .= 'var secPlN ="' . $this->getLang('secPlN') . '";';
-            $script .= 'var secPlG ="' . $this->getLang('secPlG') . '";';
-
-            $script .= 'var minSgN ="' . $this->getLang('minSgN') . '";';
-            $script .= 'var minPlN ="' . $this->getLang('minPlN') . '";';
-            $script .= 'var minPlG ="' . $this->getLang('minPlG') . '";';
-
-            $script .= 'var hourSgN ="' . $this->getLang('hourSgN') . '";';
-            $script .= 'var hourPlN ="' . $this->getLang('hourPlN') . '";';
-            $script .= 'var hourPlG ="' . $this->getLang('hourPlG') . '";';
-
-            $script .= 'var daySgN ="' . $this->getLang('daySgN') . '";';
-            $script .= 'var dayPlN ="' . $this->getLang('dayPlN') . '";';
-            $script .= 'var dayPlG ="' . $this->getLang('dayPlG') . '";';
-
+            foreach ($this->gram_lang as $value) {
+                $script.='var ' . $value . ' = "' . $this->getLang($value) . '";' . '
+                        ';
+            }
             $script .= 'var pastevent="' . $this->getLang('pastevent') . '";';
-
-            $script .= "var currentDate ='" . $dateD . "';";
-
             $script .='</script>';
+
+
             $renderer->doc .= $script;
-            $renderer->doc .= "<span class='deadline'>";
-            $renderer->doc .= $postdadline;
+            $renderer->doc .= '<span class="FKS_timer_deadline" data-date="' . $params['date'] . '">';
+
             $renderer->doc .= "</span>";
         }
         return false;
     }
+
 }
