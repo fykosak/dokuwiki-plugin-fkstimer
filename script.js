@@ -52,16 +52,16 @@ $(function() {
             var days = time.getDate() + (time.getMonth() * 31) - 1;
             var $return = "";
             if (days) {
-                $return += '<span class="FKS_timer_time">' + days + '</span><span class="FKS_timer_text">' + switchlang(days, daySgN, dayPlN, dayPlG) + "</span>";
+                $return += _add_timer_span(days, switchlang(days, daySgN, dayPlN, dayPlG));
             }
             ;
             if (days || hours) {
-                $return += '<span class="FKS_timer_time">' + hours + '</span><span class="FKS_timer_text">' + switchlang(hours, hourSgN, hourPlN, hourPlG) + "</span>";
+                $return += _add_timer_span(hours, switchlang(hours, hourSgN, hourPlN, hourPlG));
             }
             ;
-            $return += '<span class="FKS_timer_time">' + min + '</span><span class="FKS_timer_text">' + switchlang(min, minSgN, minPlN, minPlG) + "</span>";
+            $return += _add_timer_span(min, switchlang(min, minSgN, minPlN, minPlG));
             if (!days) {
-                $return += '<span class="FKS_timer_time">' + sec + '</span><span class="FKS_timer_text">' + switchlang(sec, secSgN, secPlN, secPlG) + "</span>";
+                $return += _add_timer_span(sec, switchlang(sec, secSgN, secPlN, secPlG));
             }
             ;
             return $return;
@@ -70,4 +70,9 @@ $(function() {
             return pastevent;
         }
     }
+    ;
+    function _add_timer_span(time, text) {
+        return '<span class="FKS_timer_time">' + time + '</span><span class="FKS_timer_text">' + text + "</span>";
+    }
+    ;
 });
