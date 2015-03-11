@@ -9,13 +9,11 @@ and open the template in the editor.
 */
 .FKS_timer_time{
     font-weight: bold;
-    &:before{
-        content: ' ';
-    }
 }
-.FKS_timer_text{
-    &:before{
-        content: ' ';
-    }
+
+
+.FKS_timer_text:before,.FKS_timer_time:before{
+    content: ' ';
 }
+
 

@@ -2,6 +2,6 @@ base   fkstimer
 author Michal Červňák
 email  miso@fykos.cz
 date   2014-03-18
-name   fkstimer
+name   FKStimer
 desc   display time to deadline
-url    FIXME
+url    https://github.com/cevro/dokuwiki-plugin-fkstimer.git
