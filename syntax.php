@@ -70,13 +70,13 @@ class syntax_plugin_fkstimer extends DokuWiki_Syntax_Plugin {
             list($params) = $match;
 
 
-            $script .= '<script type="text/javascript" charset="utf-8">';
+            $script .= html_open_tag('script',array('type'=>'text/javascript'));
             foreach ($this->gram_lang as $value) {
                 $script.='var ' . $value . ' = "' . $this->getLang($value) . '";' . '
                         ';
             }
             $script .= 'var pastevent="' . $this->getLang('pastevent') . '";';
-            $script .='</script>';
+            $script .=html_close_tag('script');
 
 
             $renderer->doc .= $script;

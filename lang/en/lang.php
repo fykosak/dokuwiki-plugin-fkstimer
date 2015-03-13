@@ -11,6 +11,7 @@ $lang['encoding']   = 'utf-8';
 $lang['direction']  = 'ltr';
 
 
+
 $lang['secSgN']  = 'second';
 $lang['secPlN']  = 'seconds';
 $lang['secPlG']  = 'seconds';
