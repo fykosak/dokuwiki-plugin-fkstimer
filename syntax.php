@@ -1,15 +1,16 @@
 <?php
 
+/**
+ * DokuWiki Plugin fkstimer (Syntax Component)
+ *
+ * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
+ * @author  Michal Červeňák <miso@fykos.cz>
+ */
 if (!defined('DOKU_INC')) {
     die();
 }
 
 class syntax_plugin_fkstimer extends DokuWiki_Syntax_Plugin {
-
-    private $gram_lang = array('secSgN', 'secPlN', 'secPlG',
-        'minSgN', 'minPlN', 'minPlG',
-        'hourSgN', 'hourPlN', 'hourPlG',
-        'daySgN', 'dayPlN', 'dayPlG');
 
     public function getType() {
         return 'substition';
@@ -68,16 +69,6 @@ class syntax_plugin_fkstimer extends DokuWiki_Syntax_Plugin {
 
             //$curent = date("Y-m-d-H:i:s");
             list($params) = $match;
-
-
-            $script .= html_open_tag('script',array('type'=>'text/javascript'));
-            foreach ($this->gram_lang as $value) {
-                $script.='var ' . $value . ' = "' . $this->getLang($value) . '";' . '
-                        ';
-            }
-            $script .= 'var pastevent="' . $this->getLang('pastevent') . '";';
-            $script .=html_close_tag('script');
-
 
             $renderer->doc .= $script;
             $renderer->doc .= '<span class="FKS_timer_deadline" data-date="' . $params['date'] . '">';
