@@ -1,85 +1,114 @@
 
-
 jQuery(function () {
     var $ = jQuery;
-    $('span.FKS_timer_deadline').each(function () {
-        var delta_server = (new Date($('meta[name=FKS_timer]').attr('content'))).getTime() - (new Date()).getTime();
-        
-        casodpo($(this), delta_server);
+    $('div.FKS_timer_deadline').each(function () {
+        var data = {};
+        data.delta_server = (new Date($('meta[name=FKS_timer]').attr('content'))).getTime() - (new Date()).getTime();
+        data.count = $(this).data("count");
+        timer($(this), data);
+
 
     });
-    function casodpo($span, delta_server) {
-
-        var current = (new Date()).getTime()+delta_server;
-
-        var deadline = (new Date($span.data('date'))).getTime();
+    function timer($div, data) {
+        var current = (new Date()).getTime() + data.delta_server;
+        var deadline = (new Date($div.data('date'))).getTime();
         var delta = deadline - current;
+        var deley = 0;
+        if (data.count === "none") {
+            $div.find('.timer').hide();
+            if (delta < 0) {
+                $div.find('.text-after').show();
+                $div.find('.text-before').hide();
+            } else {
+                $div.find('.text-after').hide();
+                $div.find('.text-before').show();
+            }
+            deley = Math.abs(delta);
+        } else {
+            $div.find('.text-after').hide();
+            $div.find('.text-before').hide();
+            if (data.count == "up") {
+                delta = -delta;
+            }
+            var $data = {};
 
-        var text = _get_time(delta, delta_server);
+            $data = _get_time(delta, data.delta_server);
+            var text = "";
+            if ($.isEmptyObject($data)) {
+                $div.find('.timer').hide();
+                if (data.count === "up") {
+                    $div.find('.text-before').show();
+                } else {
+                    $div.find('.text-after').show();
+                }
+            } else {
+                var $elm = {};
+                if ($data.days) {
+                    $elm.days = $data.days;
+                }
+                if ($data.days || $data.hours) {
+                    $elm.hours = $data.hours;
+                }
+                $elm.min = $data.min;
+                if (!$data.days) {
+                    $elm.sec = $data.sec;
+                }
+                for (var el in $elm) {
+                    text += _add_timer_span($elm[el], el);
+                }
+            }
 
-        $span.html(text) ;
-        
+            $div.find('.timer').html(text);
+        }
+
+
         setTimeout(function () {
-            casodpo($span,delta_server);
-        }, 1000);
+            timer($div, data);
+        }, 1000 + deley);
     }
-    function switchlang(number, SgN, PlN, PlG) {
+
+
+    function switchlang(number, el) {
+        var name = el;
         switch (number) {
             case 0:
-                return  PlG;
+                name += "PlG";
                 break;
             case 1:
-                return SgN;
+                name += "SgN";
                 break;
             case 2:
-                return  PlN;
+                name += "PlN";
                 break;
             case 3:
-                return PlN;
+                name += "PlN";
                 break;
             case 4:
-                return PlN;
+                name += "PlN";
                 break;
             default:
-                return PlG;
+                name += "PlG";
         }
-        ;
-
+        return LANG.plugins.fkstimer[name];
     }
-    ;
     function _get_time(delta) {
-
-
+        var $return = {};
         if (delta > 0) {
             delta -= (60 * 60 * 1000);
             var time = (new Date(delta));
-            var sec = time.getSeconds();
-            var min = time.getMinutes();
-            var hours = time.getHours();
-            var days = time.getDate() + (time.getMonth() * 31) - 1;
-            var $return = "";
-            if (days) {
-                $return += _add_timer_span(days, switchlang(days, LANG.plugins.fkstimer.daySgN, LANG.plugins.fkstimer.dayPlN, LANG.plugins.fkstimer.dayPlG));
-            }
-            ;
-            if (days || hours) {
-                $return += _add_timer_span(hours, switchlang(hours, LANG.plugins.fkstimer.hourSgN, LANG.plugins.fkstimer.hourPlN, LANG.plugins.fkstimer.hourPlG));
-            }
-            ;
-            $return += _add_timer_span(min, switchlang(min, LANG.plugins.fkstimer.minSgN, LANG.plugins.fkstimer.minPlN, LANG.plugins.fkstimer.minPlG));
-            if (!days) {
-                $return += _add_timer_span(sec, switchlang(sec, LANG.plugins.fkstimer.secSgN, LANG.plugins.fkstimer.secPlN, LANG.plugins.fkstimer.secPlG));
-            }
-            ;
-            return $return;
+            $return = {
+                sec: time.getSeconds(),
+                min: time.getMinutes(),
+                hours: time.getHours(),
+                days: (time.getDate() + (time.getMonth() * 31) - 1)
+            };
+
         }
-        else {
-            return LANG.plugins.fkstimer.pastevent;
-        }
+        return $return;
     }
     ;
-    function _add_timer_span(time, text) {
-        return '<span class="FKS_timer_time">' + time + '</span><span class="FKS_timer_text">' + text + "</span>";
+    function _add_timer_span(time, el) {
+        return '<span class="FKS_timer_time">' + time + '</span><span class="FKS_timer_text">' + switchlang(time, el) + "</span>";
     }
     ;
 });

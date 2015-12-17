@@ -36,13 +36,13 @@ $lang['js']['minSgN'] = $lang['minSgN'];
 $lang['js']['minPlN'] = $lang['minPlN'];
 $lang['js']['minPlG'] = $lang['minPlG'];
 
-$lang['js']['hourSgN'] = $lang['hourSgN'];
-$lang['js']['hourPlN'] = $lang['hourPlN'];
-$lang['js']['hourPlG'] = $lang['hourPlG'];
+$lang['js']['hoursSgN'] = $lang['hourSgN'];
+$lang['js']['hoursPlN'] = $lang['hourPlN'];
+$lang['js']['hoursPlG'] = $lang['hourPlG'];
 
-$lang['js']['daySgN'] = $lang['daySgN'];
-$lang['js']['dayPlN'] = $lang['dayPlN'];
-$lang['js']['dayPlG'] = $lang['dayPlG'];
+$lang['js']['daysSgN'] = $lang['daySgN'];
+$lang['js']['daysPlN'] = $lang['dayPlN'];
+$lang['js']['daysPlG'] = $lang['dayPlG'];
 
 $lang['js']['pastevent'] = $lang['pastevent'];
 

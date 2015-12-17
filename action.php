@@ -22,11 +22,12 @@ class action_plugin_fkstimer extends DokuWiki_Action_Plugin {
         $controller->register_hook('TPL_METAHEADER_OUTPUT', 'BEFORE', $this, 'add_server_time');
     }
 
-    public function add_server_time(Doku_Event &$event, $param) {
+    public function add_server_time(Doku_Event &$event) {
         /*
          * corection to server time + user can set diferent betwen server and display time.
          */
-        $date = date("Y-m-d\TH:i:s", time() + ( $this->getConf('server_corection')));
+        
+        $date = date('Y-m-d\TH:i:s', time() + ( $this->getConf('server_corection')));
        
         $event->data['meta'][] = array(
             'name' => 'FKS_timer',
