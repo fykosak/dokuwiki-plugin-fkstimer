@@ -14,19 +14,19 @@ jQuery(function () {
         var deadline = (new Date($div.data('date'))).getTime();
         var delta = deadline - current;
         var deley = 0;
-        if (data.count === "none") {
-            $div.find('.timer').hide();
-            if (delta < 0) {
-                $div.find('.text-after').show();
-                $div.find('.text-before').hide();
-            } else {
-                $div.find('.text-after').hide();
-                $div.find('.text-before').show();
-            }
-            deley = Math.abs(delta);
+
+        if (delta < 0) {
+            $div.find('.text-after').show();
+            $div.find('.text-before').hide();
         } else {
             $div.find('.text-after').hide();
-            $div.find('.text-before').hide();
+            $div.find('.text-before').show();
+        }
+        
+        if (data.count === "none") {
+            $div.find('.timer').hide();
+            deley = Math.abs(delta);
+        } else {            
             if (data.count == "up") {
                 delta = -delta;
             }
@@ -36,11 +36,7 @@ jQuery(function () {
             var text = "";
             if ($.isEmptyObject($data)) {
                 $div.find('.timer').hide();
-                if (data.count === "up") {
-                    $div.find('.text-before').show();
-                } else {
-                    $div.find('.text-after').show();
-                }
+                
             } else {
                 var $elm = {};
                 if ($data.days) {
@@ -57,10 +53,8 @@ jQuery(function () {
                     text += _add_timer_span($elm[el], el);
                 }
             }
-
             $div.find('.timer').html(text);
         }
-
 
         setTimeout(function () {
             timer($div, data);
