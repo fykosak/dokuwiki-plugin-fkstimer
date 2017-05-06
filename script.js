@@ -1,85 +1,69 @@
-
-
 jQuery(function () {
     var $ = jQuery;
-    $('span.FKS_timer_deadline').each(function () {
-        var delta_server = (new Date($('meta[name=FKS_timer]').attr('content'))).getTime() - (new Date()).getTime();
-        
-        casodpo($(this), delta_server);
 
-    });
-    function casodpo($span, delta_server) {
+    const addTimeElement = function (time, text) {
+        return '<span class="time">' + time + '</span><span class="text">' + text + "</span>";
+    };
 
-        var current = (new Date()).getTime()+delta_server;
-
-        var deadline = (new Date($span.data('date'))).getTime();
-        var delta = deadline - current;
-
-        var text = _get_time(delta, delta_server);
-
-        $span.html(text) ;
-        
-        setTimeout(function () {
-            casodpo($span,delta_server);
-        }, 1000);
-    }
-    function switchlang(number, SgN, PlN, PlG) {
+    const switchLang = function (number, index) {
+        var key = '';
         switch (number) {
-            case 0:
-                return  PlG;
-                break;
             case 1:
-                return SgN;
+                key = 'SgN';
                 break;
             case 2:
-                return  PlN;
-                break;
             case 3:
-                return PlN;
-                break;
             case 4:
-                return PlN;
+                key = 'PlN';
                 break;
+            case 0:
             default:
-                return PlG;
+                key = 'PlG';
+                break;
         }
-        ;
+        return LANG.plugins.fkstimer[index + key];
+    };
 
-    }
-    ;
-    function _get_time(delta) {
-
+    const getTimeElements = function (delta) {
 
         if (delta > 0) {
             delta -= (60 * 60 * 1000);
-            var time = (new Date(delta));
-            var sec = time.getSeconds();
-            var min = time.getMinutes();
-            var hours = time.getHours();
-            var days = time.getDate() + (time.getMonth() * 31) - 1;
+            const time = (new Date(delta));
+            const sec = time.getSeconds();
+            const min = time.getMinutes();
+            const hours = time.getHours();
+            const days = time.getDate() + (time.getMonth() * 31) - 1;
             var $return = "";
             if (days) {
-                $return += _add_timer_span(days, switchlang(days, LANG.plugins.fkstimer.daySgN, LANG.plugins.fkstimer.dayPlN, LANG.plugins.fkstimer.dayPlG));
+                $return += addTimeElement(days, switchLang(days, 'day'));
             }
-            ;
             if (days || hours) {
-                $return += _add_timer_span(hours, switchlang(hours, LANG.plugins.fkstimer.hourSgN, LANG.plugins.fkstimer.hourPlN, LANG.plugins.fkstimer.hourPlG));
+                $return += addTimeElement(hours, switchLang(hours, 'hour'));
             }
-            ;
-            $return += _add_timer_span(min, switchlang(min, LANG.plugins.fkstimer.minSgN, LANG.plugins.fkstimer.minPlN, LANG.plugins.fkstimer.minPlG));
+            $return += addTimeElement(min, switchLang(min, 'min'));
             if (!days) {
-                $return += _add_timer_span(sec, switchlang(sec, LANG.plugins.fkstimer.secSgN, LANG.plugins.fkstimer.secPlN, LANG.plugins.fkstimer.secPlG));
+                $return += addTimeElement(sec, switchLang(sec, 'sec'));
             }
-            ;
             return $return;
+        } else {
+            return LANG.plugins.fkstimer['past-event'];
         }
-        else {
-            return LANG.plugins.fkstimer.pastevent;
-        }
-    }
-    ;
-    function _add_timer_span(time, text) {
-        return '<span class="FKS_timer_time">' + time + '</span><span class="FKS_timer_text">' + text + "</span>";
-    }
-    ;
+    };
+    const countDown = function ($span, deltaServer) {
+        const current = (new Date()).getTime() + deltaServer;
+        const deadline = (new Date($span.data('date'))).getTime();
+        const delta = deadline - current;
+        const text = getTimeElements(delta, deltaServer);
+        $span.html(text);
+        setTimeout(function () {
+            countDown($span, deltaServer);
+        }, 1000);
+    };
+
+    $('.fks-timer').each(function () {
+        var deltaServer = (new Date($('meta[name="fks-timer"]').attr('content'))).getTime() - (new Date()).getTime();
+        countDown($(this), deltaServer);
+    });
+
+
 });

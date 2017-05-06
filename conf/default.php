@@ -1,6 +1,3 @@
 <?php
 
-
-$conf['server_corection'] = 0;
-
-
+$conf['server-correction'] = 0;

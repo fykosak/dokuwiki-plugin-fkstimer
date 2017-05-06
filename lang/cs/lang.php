@@ -25,7 +25,7 @@ $lang['daySgN'] = 'den';
 $lang['dayPlN'] = 'dny';
 $lang['dayPlG'] = 'dnů';
 
-$lang['pastevent'] = 'Termín je již za námi!';
+$lang['past-event'] = 'Termín je již za námi!';
 
 $lang['js']['secSgN'] = $lang['secSgN'];
 $lang['js']['secPlN'] = $lang['secPlN'];
@@ -44,8 +44,4 @@ $lang['js']['daySgN'] = $lang['daySgN'];
 $lang['js']['dayPlN'] = $lang['dayPlN'];
 $lang['js']['dayPlG'] = $lang['dayPlG'];
 
-$lang['js']['pastevent'] = $lang['pastevent'];
-
-
-//Setup VIM: ex: et ts=2 enc=utf-8 :
-
+$lang['js']['past-event'] = $lang['past-event'];

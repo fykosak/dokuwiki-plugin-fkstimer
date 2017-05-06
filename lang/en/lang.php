@@ -6,10 +6,8 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Michal Červeňák <miso at fykos dot cz>
  */
-// settings must be present and set appropriately for the language
 $lang['encoding'] = 'utf-8';
 $lang['direction'] = 'ltr';
-
 
 $lang['secSgN'] = 'second';
 $lang['secPlN'] = 'seconds';
@@ -26,7 +24,7 @@ $lang['hourPlG'] = 'hours';
 $lang['daySgN'] = 'day';
 $lang['dayPlN'] = 'days';
 $lang['dayPlG'] = 'days';
-$lang['pastevent'] = 'Term is over!';
+$lang['past-event'] = 'Term is over!';
 
 $lang['js']['secSgN'] = $lang['secSgN'];
 $lang['js']['secPlN'] = $lang['secPlN'];
@@ -45,4 +43,4 @@ $lang['js']['daySgN'] = $lang['daySgN'];
 $lang['js']['dayPlN'] = $lang['dayPlN'];
 $lang['js']['dayPlG'] = $lang['dayPlG'];
 
-$lang['js']['pastevent'] = $lang['pastevent'];
+$lang['js']['past-event'] = $lang['past-event'];
