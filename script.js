@@ -1,12 +1,13 @@
 jQuery(function () {
     var $ = jQuery;
+    const step = 100;
 
     const addTimeElement = function (time, text) {
         return '<span class="time">' + time + '</span><span class="text">' + text + "</span>";
     };
 
     const switchLang = function (number, index) {
-        var key = '';
+        var key;
         switch (number) {
             case 1:
                 key = 'SgN';
@@ -25,29 +26,36 @@ jQuery(function () {
     };
 
     const getTimeElements = function (delta) {
-
-        if (delta > 0) {
-            delta -= (60 * 60 * 1000);
-            const time = (new Date(delta));
-            const sec = time.getSeconds();
-            const min = time.getMinutes();
-            const hours = time.getHours();
-            const days = time.getDate() + (time.getMonth() * 31) - 1;
-            var $return = "";
-            if (days) {
-                $return += addTimeElement(days, switchLang(days, 'day'));
-            }
-            if (days || hours) {
-                $return += addTimeElement(hours, switchLang(hours, 'hour'));
-            }
-            $return += addTimeElement(min, switchLang(min, 'min'));
-            if (!days) {
-                $return += addTimeElement(sec, switchLang(sec, 'sec'));
-            }
-            return $return;
-        } else {
+        if (delta < 0) {
             return LANG.plugins.fkstimer['past-event'];
         }
+        delta -= (60 * 60 * 1000);
+        const time = (new Date(delta));
+        const hours = time.getHours();
+        const days = time.getDate() + (time.getMonth() * 31) - 1;
+
+        var html = '';
+        if (days) {
+            html += addTimeElement(days, switchLang(days, 'day'));
+        }
+        if (days || hours) {
+            html += addTimeElement(hours, switchLang(hours, 'hour'));
+        }
+        if (days < 100) {
+            const min = time.getMinutes();
+            html += addTimeElement(min, switchLang(min, 'min'));
+        }
+        if (!days) {
+            const sec = time.getSeconds();
+            if (step < 1000) {
+                const millisecond = Math.floor(time.getMilliseconds() / 100);
+                html += addTimeElement(sec + ',' + millisecond, switchLang(sec, 'sec'));
+            } else {
+                html += addTimeElement(sec, switchLang(sec, 'sec'));
+            }
+        }
+
+        return html;
     };
     const countDown = function ($span, deltaServer) {
         const current = (new Date()).getTime() + deltaServer;
@@ -57,13 +65,11 @@ jQuery(function () {
         $span.html(text);
         setTimeout(function () {
             countDown($span, deltaServer);
-        }, 1000);
+        }, step);
     };
 
     $('.fks-timer').each(function () {
         var deltaServer = (new Date($('meta[name="fks-timer"]').attr('content'))).getTime() - (new Date()).getTime();
         countDown($(this), deltaServer);
     });
-
-
 });

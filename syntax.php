@@ -19,13 +19,14 @@ class syntax_plugin_fkstimer extends DokuWiki_Syntax_Plugin {
     }
 
     public function connectTo($mode) {
-        $this->Lexer->addSpecialPattern('{{fkstimer>.+?}}', $mode, 'plugin_fkstimer');
+        $this->Lexer->addSpecialPattern('{{timer>.+?}}', $mode, 'plugin_fkstimer');
     }
 
     public function handle($match, $state, $pos, Doku_Handler &$handler) {
+
         switch ($state) {
             case DOKU_LEXER_SPECIAL:
-                $match = substr($match, 11, -2);
+                $match = substr($match, 8, -2);
                 $dateString = date('Y-m-d\TH:i:s', strtotime($match));
                 return [$state, ['date' => $dateString]];
             default:
@@ -36,12 +37,12 @@ class syntax_plugin_fkstimer extends DokuWiki_Syntax_Plugin {
     public function render($mode, Doku_Renderer &$renderer, $data) {
 
         if ($mode == 'xhtml') {
-            list($state, $data) = $data;
+            list($state, $params) = $data;
             switch ($state) {
                 case DOKU_LEXER_SPECIAL:
-                    $renderer->doc .= '<span class="fks-timer" data-date="' . $data['date'] . '">';
+                    $renderer->doc .= '<span class="fks-timer" data-date="' . $params['date'] . '">';
                     $renderer->doc .= '</span>';
-                    return false;
+                    return true;
                 default:
                     return true;
             }
