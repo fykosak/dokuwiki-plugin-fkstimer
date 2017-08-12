@@ -1,13 +1,14 @@
 jQuery(function () {
-    var $ = jQuery;
+    "use strict";
+    let $ = jQuery;
     const step = 100;
 
-    const addTimeElement = function (time, text) {
+    const addTimeElement = (time, text)=> {
         return '<span class="time">' + time + '</span><span class="text">' + text + "</span>";
     };
 
-    const switchLang = function (number, index) {
-        var key;
+    const switchLang = (number, index)=> {
+        let key;
         switch (number) {
             case 1:
                 key = 'SgN';
@@ -25,7 +26,7 @@ jQuery(function () {
         return LANG.plugins.fkstimer[index + key];
     };
 
-    const getTimeElements = function (delta) {
+    const getTimeElements = (delta) => {
         if (delta < 0) {
             return LANG.plugins.fkstimer['past-event'];
         }
@@ -34,7 +35,7 @@ jQuery(function () {
         const hours = time.getHours();
         const days = time.getDate() + (time.getMonth() * 31) - 1;
 
-        var html = '';
+        let html = '';
         if (days) {
             html += addTimeElement(days, switchLang(days, 'day'));
         }
@@ -57,19 +58,19 @@ jQuery(function () {
 
         return html;
     };
-    const countDown = function ($span, deltaServer) {
+    const countDown = ($span, deltaServer) => {
         const current = (new Date()).getTime() + deltaServer;
         const deadline = (new Date($span.data('date'))).getTime();
         const delta = deadline - current;
         const text = getTimeElements(delta, deltaServer);
         $span.html(text);
-        setTimeout(function () {
+        setTimeout(()=> {
             countDown($span, deltaServer);
         }, step);
     };
-
+    // function I need this.
     $('.fks-timer').each(function () {
-        var deltaServer = (new Date($('meta[name="fks-timer"]').attr('content'))).getTime() - (new Date()).getTime();
+        const deltaServer = (new Date($('meta[name="fks-timer"]').attr('content'))).getTime() - (new Date()).getTime();
         countDown($(this), deltaServer);
     });
 });
