@@ -1,13 +1,12 @@
-jQuery(function () {
+jQuery(() => {
     "use strict";
-    let $ = jQuery;
-    const step = 100;
+    const step = 1000;
 
-    const addTimeElement = (time, text)=> {
+    const addTimeElement = (time, text) => {
         return '<span class="time">' + time + '</span><span class="text">' + text + "</span>";
     };
 
-    const switchLang = (number, index)=> {
+    const switchLang = (number, index) => {
         let key;
         switch (number) {
             case 1:
@@ -58,19 +57,23 @@ jQuery(function () {
 
         return html;
     };
-    const countDown = ($span, deltaServer) => {
+    /**
+     *
+     * @param span Element
+     * @param deltaServer number
+     */
+    const countDown = (span, deltaServer) => {
         const current = (new Date()).getTime() + deltaServer;
-        const deadline = (new Date($span.data('date'))).getTime();
+        const deadline = (new Date(span.getAttribute('data-date'))).getTime();
         const delta = deadline - current;
-        const text = getTimeElements(delta, deltaServer);
-        $span.html(text);
-        setTimeout(()=> {
-            countDown($span, deltaServer);
+        span.innerHTML = getTimeElements(delta, deltaServer);
+        setTimeout(() => {
+            countDown(span, deltaServer);
         }, step);
     };
-    // function I need this.
-    $('.fks-timer').each(function () {
-        const deltaServer = (new Date($('meta[name="fks-timer"]').attr('content'))).getTime() - (new Date()).getTime();
-        countDown($(this), deltaServer);
+    document.querySelectorAll('.fks-timer').forEach((element) => {
+        const metaTag = document.querySelector('meta[name="fks-timer"]');
+        const deltaServer = metaTag ? (new Date(metaTag.getAttribute('content')).getTime() - (new Date()).getTime()) : 0;
+        countDown(element, +deltaServer);
     });
 });
