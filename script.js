@@ -1,4 +1,4 @@
-jQuery(() => {
+jQuery(function () {
     "use strict";
     const step = 1000;
 
@@ -22,12 +22,12 @@ jQuery(() => {
                 key = 'PlG';
                 break;
         }
-        return LANG.plugins.fkstimer[index + key];
+        return LANG.plugins.timer[index + key];
     };
 
     const getTimeElements = (delta) => {
         if (delta < 0) {
-            return LANG.plugins.fkstimer['past-event'];
+            return LANG.plugins.timer['past-event'];
         }
         delta -= (60 * 60 * 1000);
         const time = (new Date(delta));
@@ -57,23 +57,19 @@ jQuery(() => {
 
         return html;
     };
-    /**
-     *
-     * @param span Element
-     * @param deltaServer number
-     */
-    const countDown = (span, deltaServer) => {
+    const countDown = (element, deltaServer) => {
         const current = (new Date()).getTime() + deltaServer;
-        const deadline = (new Date(span.getAttribute('data-date'))).getTime();
+        const deadline = (new Date(element.getAttribute('data-date'))).getTime();
         const delta = deadline - current;
-        span.innerHTML = getTimeElements(delta, deltaServer);
+        element.innerHTML = getTimeElements(delta, deltaServer);
         setTimeout(() => {
-            countDown(span, deltaServer);
+            countDown(element, deltaServer);
         }, step);
     };
-    document.querySelectorAll('.fks-timer').forEach((element) => {
-        const metaTag = document.querySelector('meta[name="fks-timer"]');
-        const deltaServer = metaTag ? (new Date(metaTag.getAttribute('content')).getTime() - (new Date()).getTime()) : 0;
-        countDown(element, +deltaServer);
+
+    document.querySelectorAll('.timer').forEach((element) => {
+        const content = document.querySelector('meta[name="timer"]').getAttribute('content');
+        const deltaServer = (new Date(content)).getTime() - (new Date()).getTime();
+        countDown(element, deltaServer);
     });
 });

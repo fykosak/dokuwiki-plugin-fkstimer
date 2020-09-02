@@ -1,24 +1,28 @@
 <?php
 
-class action_plugin_fkstimer extends DokuWiki_Action_Plugin {
+use dokuwiki\Extension\ActionPlugin;
+use dokuwiki\Extension\Event;
+use dokuwiki\Extension\EventHandler;
 
-    /**
-     *
-     * @param Doku_Event_Handler $controller
-     */
-    public function register(Doku_Event_Handler $controller) {
+/**
+ * Class action_plugin_timer
+ * @author Michal Červeňák <miso@fykos.cz>
+ */
+class action_plugin_timer extends ActionPlugin {
+
+    public function register(EventHandler $controller) {
         $controller->register_hook('TPL_METAHEADER_OUTPUT', 'BEFORE', $this, 'serverTime');
     }
 
-    public function serverTime(Doku_Event &$event) {
+    public function serverTime(Event $event) {
         /*
          * correction to server time + user can set different between server and display time.
          */
         $date = date('Y-m-d\TH:i:s', time() + ($this->getConf('server-correction')));
 
         $event->data['meta'][] = [
-            'name' => 'fks-timer',
-            'content' => $date
+            'name' => 'timer',
+            'content' => $date,
         ];
     }
 }
