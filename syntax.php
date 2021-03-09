@@ -1,28 +1,26 @@
 <?php
 
-class syntax_plugin_fkstimer extends DokuWiki_Syntax_Plugin {
+use dokuwiki\Extension\SyntaxPlugin;
 
-    public function getType() {
+class syntax_plugin_timer extends SyntaxPlugin {
+
+    public function getType(): string {
         return 'substition';
     }
 
-    public function getPType() {
+    public function getPType(): string {
         return 'normal';
     }
 
-    public function getAllowedTypes() {
-        return [];
-    }
-
-    public function getSort() {
+    public function getSort(): int {
         return 225;
     }
 
-    public function connectTo($mode) {
-        $this->Lexer->addSpecialPattern('{{timer>.+?}}', $mode, 'plugin_fkstimer');
+    public function connectTo($mode): void {
+        $this->Lexer->addSpecialPattern('{{timer>.+?}}', $mode, 'plugin_timer');
     }
 
-    public function handle($match, $state, $pos, Doku_Handler $handler) {
+    public function handle($match, $state, $pos, Doku_Handler $handler): array {
 
         switch ($state) {
             case DOKU_LEXER_SPECIAL:
@@ -34,14 +32,13 @@ class syntax_plugin_fkstimer extends DokuWiki_Syntax_Plugin {
         }
     }
 
-    public function render($mode, Doku_Renderer $renderer, $data) {
+    public function render($mode, Doku_Renderer $renderer, $data): bool {
 
         if ($mode == 'xhtml') {
-            list($state, $params) = $data;
+            [$state, $params] = $data;
             switch ($state) {
                 case DOKU_LEXER_SPECIAL:
-                    $renderer->doc .= '<span class="fks-timer" data-date="' . $params['date'] . '">';
-                    $renderer->doc .= '</span>';
+                    $renderer->doc .= '<span class="timer" data-date="' . $params['date'] . '"></span>';
                     return true;
                 default:
                     return true;
